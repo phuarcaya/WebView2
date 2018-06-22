@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
     private ProgressDialog progressDialog;
+    private String urlClubIntercorp = "http://clubintercorp.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             /*webView.loadUrl("https://ciprdeuswa01.azurewebsites.net");*/
-            webView.loadUrl("http://clubintercorp.com");
+            webView.loadUrl(urlClubIntercorp);
         } else {
             Toast.makeText(MainActivity.this, "Error de red, revise su conexión!", Toast.LENGTH_SHORT).show();
             Handler handler = new Handler();
