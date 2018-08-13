@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
     private ProgressDialog progressDialog;
-    private String urlClubIntercorp = "http://clubintercorp.com";
+    private String urlClubIntercorp = "http://clubintercorp.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
             progressDialog.setMessage("Espere por favor...");
             progressDialog.show();
 
-            webView.setWebViewClient(new WebViewClient() {
+          webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    webView.loadUrl(url);
-                    return true;
+                    if (url != null) {
+                        if(url.startsWith("whatsapp://")){
+                            view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        }else {
+                            webView.loadUrl(url);
+                        }
+
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
 
                 @Override
@@ -91,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }
-
     }
 
     @Override
